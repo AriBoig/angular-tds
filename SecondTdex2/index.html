@@ -1,0 +1,52 @@
+</!DOCTYPE html>
+
+<html lang="en" ng-app="ListesApp">
+<head>
+	<title>Choix multiples</title>
+	<meta charset="UTF-8">
+	<link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="http://angular.kobject.net/css/css.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+	<script src="app/NoteApp.js"></script>
+	<script src="app/ChoixController.js"></script>
+</head>
+
+<body ng-app="TD2" ng-controller="choixController as ctrl">
+<div class="container">
+	<div class="panel default">
+
+		<!-- ngView:  -->
+		<div ng-view="" class="toggle ng-scope">
+
+			<form id="choixMultiples">
+				<div>
+					<h1>Sélectionnez vos produits</h1>
+					<div class="form-group">
+						<div class="inline-block">
+							<label>Produits disponibles :
+								<select title="Double-cliquez pour ajouter" class="form-control" size="10" multiple="multiple" ng-model="ctrl.selectedDispoItems" option="item.title for item in ctrl.dispoItems">
+									<option ng-repeat="item in ctrl.dispoItems" value="{{$index}}">{{item.title}} </option>
+								</select>
+							</label>
+						</div>
+						<div class="inline-block">
+							<div title="Ajouter" class="btn btn-primary list-btn" ng-click="ctrl.addToIncluded()" ng-disabled="ctrl.selectedDispoItems.length<1" disabled="disabled"><span aria-hidden="true" class="glyphicon glyphicon-step-forward"></span></div>
+							<div title="Ajouter tous" class="btn btn-primary list-btn" ng-click="ctrl.addAllToIncluded()" ng-disabled="ctrl.dispoItems.length<1"><span aria-hidden="true" class="glyphicon glyphicon-fast-forward"></span></div>
+							<div title="Retirer" class="btn btn-primary list-btn" ng-click="ctrl.removeFromIncluded()" ng-disabled="ctrl.selectedincludedItems.length<1" disabled="disabled"><span aria-hidden="true" class="glyphicon glyphicon-step-backward"></span></div>
+							<div title="Retirer tous" class="btn btn-primary list-btn" ng-click="ctrl.removeAllFromIncluded()" ng-disabled="ctrl.includedItems.length<1" disabled="disabled"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></div>
+						</div>
+
+						<div class="inline-block">
+							<label>Produits à inclure :
+								<select title="Double-cliquez pour ajouter" class="form-control ng-pristine ng-valid ng-touched" ng-model="ctrl.selectedIncludedItems" ng-dblclick="deselectItem()" ng-options="item.title for item in includedItems" size="10" multiple="multiple" style="">
+									<option ng-repeat="item in ctrl.includedItems" value="{{$index}}">{{item.title}} </option>
+								</select>
+							</label>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

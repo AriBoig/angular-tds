@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+        <meta charset="UTF-8">
+        <title>Hello</title>
+        <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-cookies.min.js"></script>
+        <script src="app/NoteApp.js"></script>
+        <script src="app/NoteController.js"></script>
+</head>
+<body data-ng-app="myApp" ng-controller="myCtrl as ctrl">
+<div ng-view="" class="toggle ng-scope"><div id="note" class="ng-scope">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Ex 1 : Note Application</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <fieldset >
+                    <legend>Note : </legend>
+                    <textarea ng-change="ctrl.count()" type="text" data-ng-model="ctrl.value" placeholder="Insérer..." maxlength="100" class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched"></textarea>
+                </fieldset>
+                <p style="margin-top: 10px;">
+                    <button ng-click="ctrl.save()" class="btn btn-primary">Enregistrer</button>
+                    <button ng-click="ctrl.clear()" class="btn btn-primary" >Effacer</button>
+                </p>
+                <div ng-class="{'alert-warning': ctrl.warning, 'alert-danger' : ctrl.danger}" class="alert alert-info">
+                    <p>Nombre de caractères restants : {{ctrl.caractereRestant}}</p>
+                </div>
+                <div class="alert alert-success">
+                    <p>{{ctrl.note}}</p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></div>
+</body>
+</html>

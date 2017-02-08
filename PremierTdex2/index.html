@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+        <meta charset="UTF-8">
+        <title>Hello</title>
+        <link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+        <script src="app/NoteApp.js"></script>
+        <script src="app/ServiceController.js"></script>
+</head>
+<body data-ng-app="myApp" ng-controller="myCtrl as ctrl">
+    <form id="services">
+
+        <h1>Services</h1>
+        <div class="alert alert-info">
+            <span>Choisissez les éléments à inclure</span>
+            <p>
+                <ng-pluralize count="ctrl.nbServices"
+                              when="{'0': 'Aucun service selectionné',
+                           '1': '1 service selectionné',
+                           'other': '{} services selectionnés'}">
+                </ng-pluralize>
+            </p>
+        </div>
+        <ul>
+            <li ng-repeat="service in ctrl.services" ng-click="ctrl.toggleActive($index)" ng-class="{active:ctrl.services[$index].active == true}">
+                {{ctrl.services[$index].name}} <span>{{ctrl.services[$index].price}}€</span>
+            </li>
+        </ul>
+
+        <div class="total">
+            <!-- Format en currency. -->
+            Total: <span >{{ctrl.totalite}}€</span>
+        </div>
+
+        <div>
+            <div class="input-group">
+      <span class="input-group-addon">
+        <input type="checkbox" aria-label="..." ng-model="ckPromo" ng-click="applyCode()" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+      </span>
+                <input type="text" class="form-control ng-valid ng-touched ng-dirty ng-valid-parse" aria-label="..." ng-model="codePromo" placeholder="Code promo" ng-keyup="applyCode()">
+            </div>
+        </div>
+
+        <div class="total" ng-show="ckPromo&amp;&amp;codePromo">
+            Remise :<span ng-if="IsNumeric(remise)" class="ng-binding ng-scope"></span><br>
+            Total avec remise :<span class="ng-binding"></span>
+        </div>
+    </form>
+</body>
+</html>
