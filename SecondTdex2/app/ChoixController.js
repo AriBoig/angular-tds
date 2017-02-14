@@ -3,66 +3,56 @@
  */
 
 angular.module('ListesApp').controller('choixController', [function() {
-
+    this.form = false;
+    this.operation = "";
+    this.tmpContact= [];
     var self = this;
-
-    this.dispoItems = [
+    this.contacts = [
         {
-            "url": "http://tutorialzine.com/2013/07/50-must-have-plugins-for-extending-twitter-bootstrap/",
-            "title": "50 Must-have plugins for extending Twitter Bootstrap",
-            "image": "http://cdn.tutorialzine.com/wp-content/uploads/2013/07/featured_4-100x100.jpg"
-        },
-        {
-            "url": "http://tutorialzine.com/2013/08/simple-registration-system-php-mysql/",
-            "title": "Making a Super Simple Registration System With PHP and MySQL",
-            "image": "http://cdn.tutorialzine.com/wp-content/uploads/2013/08/simple_registration_system-100x100.jpg"
-        },
-        {
-            "url": "http://tutorialzine.com/2013/08/slideout-footer-css/",
-            "title": "Create a slide-out footer with this neat z-index trick",
-            "image": "http://cdn.tutorialzine.com/wp-content/uploads/2013/08/slide-out-footer-100x100.jpg"
-        },
-        {
-            "url": "http://tutorialzine.com/2013/06/digital-clock/",
-            "title": "How to Make a Digital Clock with jQuery and CSS3",
-            "image": "http://cdn.tutorialzine.com/wp-content/uploads/2013/06/digital_clock-100x100.jpg"
-        },
-        {
-            "url": "http://tutorialzine.com/2013/05/diagonal-fade-gallery/",
-            "title": "Smooth Diagonal Fade Gallery with CSS3 Transitions",
-            "image": "http://cdn.tutorialzine.com/wp-content/uploads/2013/05/featured-100x100.jpg"
-        },
-        {
-            "url": "http://tutorialzine.com/2013/05/mini-ajax-file-upload-form/",
-            "title": "Mini AJAX File Upload Form",
-            "image": "http://cdn.tutorialzine.com/wp-content/uploads/2013/05/ajax-file-upload-form-100x100.jpg"
-        },
-        {
-            "url": "http://tutorialzine.com/2013/04/services-chooser-backbone-js/",
-            "title": "Your First Backbone.js App – Service Chooser",
-            "image": "http://cdn.tutorialzine.com/wp-content/uploads/2013/04/service_chooser_form-100x100.jpg"
+            "name": "ZUCKENBERG",
+            "firstName": "mark",
+            "mail": "mark@facebook.com"
+        },{
+            "name": "GATES",
+            "firstName": "bill",
+            "mail":"bill@microsoft.com"
+        },{
+            "name": "JOBS",
+            "firstName": "steeve",
+            "mail":"bill@microsoft.com"
         }
-    ];
+    ]
 
-    this.includeItems = [];
-    this.selectedDispoItems = [];
-    this.selectedIncludeItems = [];
-    this.step = 0;
-
-    this.addToIncluded = function(){
-        angular.forEach(this.selectedDispoItems, function(element) {
-            i = self.dispoItems.indexOf(element);
-            self.includeItems.push(self.dispoItems[i]);
-            self.dispoItems.slice(i,1);
-        });
-    };
-    this.addAllToIncluded = function(){
+    this.toAdd = function(){
+        if(self.form)
+            self.form = false;
+        else {
+            self.form = true;
+            self.operation = "Ajouter un contact";
+            self.tmpContact.name = "";
+            self.tmpContact.firstName = "";
+            self.tmpContact.mail = "";
+        }
 
     };
-    this.removeFromIncluded = function(){
 
+    app.filter("newFiltre",
+     //retourner une fonction (contacts)
+     //default.get().them( retourne.contacts filtrés
+    );
+    this.toUpdate = function ($contact){
+        if(self.form)
+            self.form = false;
+        else {
+            self.form = true;
+            self.operation = "Modifier un contact";
+            self.tmpContact.name = $contact.name;
+            self.tmpContact.firstName = $contact.firstName;
+            self.tmpContact.mail = $contact.mail;
+        }
     };
-    this.removeAllFromIncluded = function(){
 
-    };
+    this.delete = function($contact){
+
+    }
 }]);

@@ -12,41 +12,42 @@
 </head>
 
 <body ng-app="TD2" ng-controller="choixController as ctrl">
-<div class="container">
-	<div class="panel default">
+<div ng-view="" class="toggle ng-scope"><div id="contact" class="ng-scope">
+	<div class="panel panel-primary">
+		<div class="panel-heading">Contacts</div>
+		<div class="panel-body">
+			<input type="text" placeholder="Filtrer..." data-ng-model="q" class="form-control ng-valid ng-dirty ng-valid-parse ng-touched">
+			<table class="table table-striped" id="lstContact">
+				<tbody>
+				<tr contact-elem="" class="animate-repeat ng-scope" ng-repeat="contact in ctrl.contacts ">
+					<td class="ng-binding">{{ctrl.contacts[$index].name}}</td>
+					<td class="ng-binding">{{ctrl.contacts[$index].firstName}}</td>
+					<td class="ng-binding">{{ctrl.contacts[$index].mail}}</td>
+					<td>
+						<a class="btn btn-info btn-xs" ng-click="ctrl.toUpdate(ctrl.contacts[$index])"><buttun class="glyphicon glyphicon-edit" ></buttun> </a>
+						<a class="btn btn-danger btn-xs" ng-click="ctrl.delete(ctrl.contacts[$index])"><buttun class="glyphicon glyphicon-remove-circle"></buttun></a>
+					</td>
 
-		<!-- ngView:  -->
-		<div ng-view="" class="toggle ng-scope">
-
-			<form id="choixMultiples">
-				<div>
-					<h1>Sélectionnez vos produits</h1>
-					<div class="form-group">
-						<div class="inline-block">
-							<label>Produits disponibles :
-								<select title="Double-cliquez pour ajouter" class="form-control" size="10" multiple="multiple" ng-model="ctrl.selectedDispoItems" option="item.title for item in ctrl.dispoItems">
-									<option ng-repeat="item in ctrl.dispoItems" value="{{$index}}">{{item.title}} </option>
-								</select>
-							</label>
-						</div>
-						<div class="inline-block">
-							<div title="Ajouter" class="btn btn-primary list-btn" ng-click="ctrl.addToIncluded()" ng-disabled="ctrl.selectedDispoItems.length<1" disabled="disabled"><span aria-hidden="true" class="glyphicon glyphicon-step-forward"></span></div>
-							<div title="Ajouter tous" class="btn btn-primary list-btn" ng-click="ctrl.addAllToIncluded()" ng-disabled="ctrl.dispoItems.length<1"><span aria-hidden="true" class="glyphicon glyphicon-fast-forward"></span></div>
-							<div title="Retirer" class="btn btn-primary list-btn" ng-click="ctrl.removeFromIncluded()" ng-disabled="ctrl.selectedincludedItems.length<1" disabled="disabled"><span aria-hidden="true" class="glyphicon glyphicon-step-backward"></span></div>
-							<div title="Retirer tous" class="btn btn-primary list-btn" ng-click="ctrl.removeAllFromIncluded()" ng-disabled="ctrl.includedItems.length<1" disabled="disabled"><span aria-hidden="true" class="glyphicon glyphicon-fast-backward"></span></div>
-						</div>
-
-						<div class="inline-block">
-							<label>Produits à inclure :
-								<select title="Double-cliquez pour ajouter" class="form-control ng-pristine ng-valid ng-touched" ng-model="ctrl.selectedIncludedItems" ng-dblclick="deselectItem()" ng-options="item.title for item in includedItems" size="10" multiple="multiple" style="">
-									<option ng-repeat="item in ctrl.includedItems" value="{{$index}}">{{item.title}} </option>
-								</select>
-							</label>
-						</div>
-					</div>
-				</div>
-			</form>
+				<tr><td colspan="4">
+					<a id="add" href="" ng-click="ctrl.toAdd()" class="btn btn-primary">Ajouter...</a>
+					<a id="add" href="" ng-show="" ng-click="cancelOne()" class="btn btn-danger ng-hide">
+						<data-ng-pluralize count="contacts.length" when="{'one': 'Annuler la suppression.',
+                     'other': 'Annuler les suppressions ({}) .'}">Annuler les suppressions (0) .</data-ng-pluralize>
+					</a></td></tr>
+				</tbody>
+			</table>
+			<fieldset data-ng-show="ctrl.form" class="container form-group form-inline">
+				<legend class="ng-binding">{{ctrl.operation}}</legend>
+				<form name="frmContact" data-ng-submit="update()" novalidate="" class="ng-pristine ng-invalid ng-invalid-required ng-valid-email">
+					<input class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" type="text" ng-model="ctrl.tmpContact.name" placeholder="Entrez un nom..." required="">
+					<input class="form-control ng-pristine ng-valid ng-touched" type="text" ng-model="ctrl.tmpContact.firstName" placeholder="Prénom...">
+					<input class="form-control ng-pristine ng-valid-email ng-invalid ng-invalid-required ng-touched" type="email" ng-model="ctrl.tmpContact.mail" placeholder="Adresse email..." required="">
+					<input type="submit" value="Valider" class="btn btn-primary">
+					<input type="button" value="Annuler" ng-click="ctrl.toAdd()" class="btn btn-primary">
+				</form>
+			</fieldset>
 		</div>
 	</div>
+</div>
 </body>
 </html>
