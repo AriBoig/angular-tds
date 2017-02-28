@@ -2,10 +2,14 @@
  * Created by arist on 24/01/2017.
  */
 
-myApp.controller('myCtrl', [function() {
+myApp.controller('myCtrl', [function($http) {
     var self = this;
     this.totalite = 300;
     this.nbServices = 1;
+    this.pCoche = false;
+    this.pErreur = false;
+    this.totalAvecRemise = 0;
+    this.remise = 0;
     this.services = [
         {
             "name": "Web Development",
@@ -24,14 +28,22 @@ myApp.controller('myCtrl', [function() {
             "price": 220,
             "active":false
         }
-        ]
-    this.promo = [
-        {
-            "B22":0.05,
-            "AZ":0.01,
-            "UBOAT":0.02
-        }
-    ]
+        ];
+
+    this.promoExiste = function(){
+        $http.get("promo.json").then(function(response) {
+            self.remise = 0;
+            self.totalAvecRemise = 0;
+            self.pErreur = true;
+            angular.forEach(response.data, function(value, key){
+                if(self.codePromo == key) {
+                    self.remise = self.totals*value;
+                    self.totalAvecRemise = self.totals-self.remise;
+                    self.pErreur = false;
+                }
+            });
+        });
+    };
     self.toggleActive = function($item){
         if(this.services[$item].active == true) {
             this.services[$item].active = false;

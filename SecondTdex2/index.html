@@ -16,23 +16,26 @@
 	<div class="panel panel-primary">
 		<div class="panel-heading">Contacts</div>
 		<div class="panel-body">
-			<input type="text" placeholder="Filtrer..." data-ng-model="q" class="form-control ng-valid ng-dirty ng-valid-parse ng-touched">
+			<input type="text" placeholder="Filtrer..." class="form-control" data-ng-change="ctrl.update()" data-ng-model="ctrl.filtre">
 			<table class="table table-striped" id="lstContact">
 				<tbody>
-				<tr contact-elem="" class="animate-repeat ng-scope" ng-repeat="contact in ctrl.contacts ">
+				<tr contact-elem="" class="animate-repeat ng-scope" ng-repeat="contact in ctrl.contacts |deletedCheck | filter:ctrl.filtre as results">
 					<td class="ng-binding">{{ctrl.contacts[$index].name}}</td>
 					<td class="ng-binding">{{ctrl.contacts[$index].firstName}}</td>
 					<td class="ng-binding">{{ctrl.contacts[$index].mail}}</td>
 					<td>
-						<a class="btn btn-info btn-xs" ng-click="ctrl.toUpdate(ctrl.contacts[$index])"><buttun class="glyphicon glyphicon-edit" ></buttun> </a>
-						<a class="btn btn-danger btn-xs" ng-click="ctrl.delete(ctrl.contacts[$index])"><buttun class="glyphicon glyphicon-remove-circle"></buttun></a>
+						<a class="btn btn-info btn-xs" ng-click="ctrl.toUpdate(contact)"><buttun class="glyphicon glyphicon-edit" ></buttun> </a>
+						<a class="btn btn-danger btn-xs" ng-click="ctrl.delete(contact)"><buttun class="glyphicon glyphicon-remove-circle"></buttun></a>
 					</td>
 
 				<tr><td colspan="4">
 					<a id="add" href="" ng-click="ctrl.toAdd()" class="btn btn-primary">Ajouter...</a>
-					<a id="add" href="" ng-show="" ng-click="cancelOne()" class="btn btn-danger ng-hide">
-						<data-ng-pluralize count="contacts.length" when="{'one': 'Annuler la suppression.',
-                     'other': 'Annuler les suppressions ({}) .'}">Annuler les suppressions (0) .</data-ng-pluralize>
+					<a href="" class="btn btn-danger" data-ng-show="results.length<ctrl.contacts.length" data-ng-click="ctrl.cancel()">
+						<data-ng-pluralize count="ctrl.contacts.length-results.length"
+										   when="{'0': 'z',
+                                            '1': 'Annuler la suppression.',
+                                            'other': 'Annuler les suppressions ({})'}">
+						</data-ng-pluralize>
 					</a></td></tr>
 				</tbody>
 			</table>
@@ -43,9 +46,16 @@
 					<input class="form-control ng-pristine ng-valid ng-touched" type="text" ng-model="ctrl.tmpContact.firstName" placeholder="Prénom...">
 					<input class="form-control ng-pristine ng-valid-email ng-invalid ng-invalid-required ng-touched" type="email" ng-model="ctrl.tmpContact.mail" placeholder="Adresse email..." required="">
 					<input type="submit" value="Valider" class="btn btn-primary">
-					<input type="button" value="Annuler" ng-click="ctrl.toAdd()" class="btn btn-primary">
+					<input type="button" value="Annuler" ng-click="ctrl.form = 0" class="btn btn-primary">
 				</form>
 			</fieldset>
+			<div class="container">
+				<data-ng-pluralize count="results.length"
+								   when="{'0': 'Pas de contact trouve :\'(',
+							'1': '1 contact trouve.',
+							'other': '{} contacts trouves'}">
+				</data-ng-pluralize>
+			</div>
 		</div>
 	</div>
 </div>

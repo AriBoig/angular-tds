@@ -37,15 +37,15 @@
         <div>
             <div class="input-group">
       <span class="input-group-addon">
-        <input type="checkbox" aria-label="..." ng-model="ckPromo" ng-click="applyCode()" class="ng-valid ng-dirty ng-valid-parse ng-touched">
+        <input type="checkbox" aria-label="..." ng-model="ctrl.pCoche">
       </span>
-                <input type="text" class="form-control ng-valid ng-touched ng-dirty ng-valid-parse" aria-label="..." ng-model="codePromo" placeholder="Code promo" ng-keyup="applyCode()">
+                <input type="text" class="form-control" ng-change="ctrl.promoExiste()" ng-model="ctrl.codePromo" placeholder="Code promo">
             </div>
         </div>
 
-        <div class="total" ng-show="ckPromo&amp;&amp;codePromo">
-            Remise :<span ng-if="IsNumeric(remise)" class="ng-binding ng-scope"></span><br>
-            Total avec remise :<span class="ng-binding"></span>
+        <div class="total" ng-show="ctrl.pCoche && ctrl.codePromo">
+            Remise : <span ng-show="!ctrl.pErreur">{{ctrl.remise | currency}}</span><span ng-show="ctrl.pErreur">Code promo invalide</span><br>
+            Total avec remise : <span>{{ctrl.totalAvecRemise | currency}}</span>
         </div>
     </form>
 </body>

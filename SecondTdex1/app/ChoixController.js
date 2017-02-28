@@ -44,25 +44,37 @@ angular.module('ListesApp').controller('choixController', [function() {
         }
     ];
 
-    this.includeItems = [];
+    this.includedItems = [];
     this.selectedDispoItems = [];
-    this.selectedIncludeItems = [];
+    this.selectedIncludedItems = [];
     this.step = 0;
 
     this.addToIncluded = function(){
-        angular.forEach(this.selectedDispoItems, function(element) {
+        angular.forEach(self.selectedDispoItems, function(element){
             i = self.dispoItems.indexOf(element);
-            self.includeItems.push(self.dispoItems[i]);
-            self.dispoItems.slice(i,1);
+            self.includedItems.push(self.dispoItems[i]);
+            self.dispoItems.splice(i,1);
         });
     };
     this.addAllToIncluded = function(){
-
+        while(self.dispoItems.length>0){
+            self.includedItems.push(self.dispoItems[0]);
+            self.dispoItems.splice(0,1);
+        }
     };
+
     this.removeFromIncluded = function(){
-
+        angular.forEach(self.selectedIncludedItems, function(element){
+            i = self.includedItems.indexOf(element);
+            self.dispoItems.push(self.includedItems[i]);
+            self.includedItems.splice(i,1);
+        });
     };
-    this.removeAllFromIncluded = function(){
 
+    this.RemoveAllFromIncluded = function(){
+        while(self.includedItems.length>0){
+            self.dispoItems.push(self.includedItems[0]);
+            self.includedItems.splice(0,1);
+        }
     };
 }]);
