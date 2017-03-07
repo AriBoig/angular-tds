@@ -19,10 +19,10 @@
 			<input type="text" placeholder="Filtrer..." class="form-control" data-ng-change="ctrl.update()" data-ng-model="ctrl.filtre">
 			<table class="table table-striped" id="lstContact">
 				<tbody>
-				<tr contact-elem="" class="animate-repeat ng-scope" ng-repeat="contact in ctrl.contacts |deletedCheck | filter:ctrl.filtre as results">
-					<td class="ng-binding">{{ctrl.contacts[$index].name}}</td>
-					<td class="ng-binding">{{ctrl.contacts[$index].firstName}}</td>
-					<td class="ng-binding">{{ctrl.contacts[$index].mail}}</td>
+				<tr contact-elem="" class="animate-repeat ng-scope" ng-repeat="contact in ctrl.contacts |deletedCheck | filter:ctrl.filtre as results"  ng-if="contact.deleted === false">
+					<td class="ng-binding">{{contact.name}}</td>
+					<td class="ng-binding">{{contact.firstName}}</td>
+					<td class="ng-binding">{{contact.mail}}</td>
 					<td>
 						<a class="btn btn-info btn-xs" ng-click="ctrl.toUpdate(contact)"><buttun class="glyphicon glyphicon-edit" ></buttun> </a>
 						<a class="btn btn-danger btn-xs" ng-click="ctrl.delete(contact)"><buttun class="glyphicon glyphicon-remove-circle"></buttun></a>
@@ -39,25 +39,26 @@
 					</a></td></tr>
 				</tbody>
 			</table>
-			<fieldset data-ng-show="ctrl.form" class="container form-group form-inline">
+			<fieldset data-ng-show="ctrl.form == 1 || ctrl.form == 2" class="container form-group form-inline">
 				<legend class="ng-binding">{{ctrl.operation}}</legend>
-				<form name="frmContact" data-ng-submit="update()" novalidate="" class="ng-pristine ng-invalid ng-invalid-required ng-valid-email">
-					<input class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" type="text" ng-model="ctrl.tmpContact.name" placeholder="Entrez un nom..." required="">
+				<form name="frmContact" data-ng-submit="ctrl.update()" novalidate class="ng-pristine ng-invalid ng-invalid-required ng-valid-email" >
+					<input class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" type="text" ng-model="ctrl.tmpContact.name" placeholder="Entrez un nom..." required>
 					<input class="form-control ng-pristine ng-valid ng-touched" type="text" ng-model="ctrl.tmpContact.firstName" placeholder="Prénom...">
-					<input class="form-control ng-pristine ng-valid-email ng-invalid ng-invalid-required ng-touched" type="email" ng-model="ctrl.tmpContact.mail" placeholder="Adresse email..." required="">
+					<input class="form-control ng-pristine ng-valid-email ng-invalid ng-invalid-required ng-touched" type="email" ng-model="ctrl.tmpContact.mail" placeholder="Adresse email..." required>
 					<input type="submit" value="Valider" class="btn btn-primary">
 					<input type="button" value="Annuler" ng-click="ctrl.form = 0" class="btn btn-primary">
 				</form>
 			</fieldset>
 			<div class="container">
 				<data-ng-pluralize count="results.length"
-								   when="{'0': 'Pas de contact trouve :\'(',
-							'1': '1 contact trouve.',
-							'other': '{} contacts trouves'}">
+								   when="{'0': 'Pas de contact ',
+							'1': '1 contact trouvé.',
+							'other': '{} contacts trouvés'}">
 				</data-ng-pluralize>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 </body>
 </html>

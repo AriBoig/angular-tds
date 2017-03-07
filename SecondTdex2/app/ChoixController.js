@@ -2,20 +2,21 @@
  * Created by arist on 24/01/2017.
  */
 angular.module('ListesApp').filter("deletedCheck", function() {
-    return function (contacts) {
-        var nouvelleList = [];
-        angular.forEach(contacts, function(contact) {
-            console.log(contact);
-            if(contact.deleted == false) {
-                nouvelleList.push(contact);
-            }
-        });
-        return nouvelleList;
-    };
-});
+        return function (contacts) {
+            var nouvelleList = [];
+            angular.forEach(contacts, function(contact) {
+                console.log(contact);
+                if(contact.deleted == false) {
+                    nouvelleList.push(contact);
+                }
+            });
+            return nouvelleList;
+        };
+    });
 
 angular.module('ListesApp').controller('choixController', [function() {
     this.form = 0;
+    this.filtre = "";
     this.operation = "";
     this.tmpContact;
     this.contact;
@@ -37,7 +38,7 @@ angular.module('ListesApp').controller('choixController', [function() {
             "mail":"bill@microsoft.com",
             "deleted" : false
         }
-    ]
+    ];
 
     this.toAdd = function(){
         self.form = 1;
@@ -58,7 +59,7 @@ angular.module('ListesApp').controller('choixController', [function() {
             var index = self.contacts.indexOf(self.contact);
             self.contacts[index] = self.tmpContact;
             console.log(index);
-            self.edit = 0;
+            self.form = 0;
         } else {
             self.contacts.push(self.tmpContact);
         }
@@ -66,9 +67,8 @@ angular.module('ListesApp').controller('choixController', [function() {
 
     this.cancel = function(){
         angular.forEach(self.contacts, function(contact){
-            if(contact.deleted){
+            if(contact.deleted)
                 contact.deleted = false;
-            }
         });
     };
 
