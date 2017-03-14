@@ -1,0 +1,1 @@
+{nom: "Mutlti-Modules APP", version: "1.0", paths:{"/":[{caption:"Se connecter", href:"/login"},{...}]}
